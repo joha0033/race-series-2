@@ -1,28 +1,41 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { RoutingProvider, Route } from './Context/Authorization/Routing/routing'
+import { AuthProvider, AuthRoute } from './Context/Authorization/authorization'
+import { StyleProvider, AppStyle } from './Context/Style/style'
+import { AppLayout } from './components/AppLayout'
+import './App.css'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+const Log = ({ componentName }) => (
+  <>
+    {console.log(componentName)}
+  </>
+
+)
+
+export const App = () => {
+  return (
+    <StyleProvider>
+      <RoutingProvider>
+        <AuthProvider>
+          <AppLayout>
+            <AuthRoute>
+              <div className={'main'}>
+                <Route
+                  href="/admin/races/">
+                  <Log componentName={'RACES'} />
+                  <h1>Races</h1>
+                </Route>
+                <Route href="/admin/participants/">
+                  <Log componentName={'PARTS'} />
+                  <h1>Participants</h1>
+                </Route>
+              </div>
+            </AuthRoute>
+          </AppLayout>
+        </AuthProvider>
+      </RoutingProvider>
+    </StyleProvider>
+
+  )
 }
-
-export default App;
